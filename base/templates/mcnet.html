@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mcnet</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body style="padding-top: 3.5rem;">
+{% include 'navbar.html' %}
+<main role="main">
+    <div class="container">
+        <div class="row justify-content-start mt-5">
+            <div class="col-md-6">
+                <h3>Upload LHE File to get Data</h3>
+                <h3>Check below table for all events data</h3>
+                <form action="/uploadlhe" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Choose a file:</label>
+                        <input type="file" id="file" name="file" accept=".json,.lhe,.txt" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get Momentum Distribution of Top Quarks</button>
+
+                    <img src="{{ result_img }}" name="graph" width="900" height="700"/>
+                    {% if all_events %}
+                    <table border="1">
+                    <tr>
+                        <th>Event Number</th>
+                        <th>Total Particles</th>
+                        <th>Final state particles</th>
+                        <th>Momentum sums</th>
+                    </tr>
+                    {% for event_number, event_data in all_events.items() %}
+                    <tr>
+                        <td>{{ event_number }}</td>
+                        <td>{{ event_data['Total Particles'] }}</td>
+                        <td>{{ event_data['Final state particles'] }}</td>
+                        <td>{{ event_data['Momentum sums'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
